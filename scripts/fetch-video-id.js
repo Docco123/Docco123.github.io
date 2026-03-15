@@ -7,15 +7,15 @@ const path = require("path");
 
 const PAGE_URL = "https://www.c-span.org/congress/?chamber=house";
 
-// Try patterns from most specific to most permissive
+// All patterns tried in order — most specific first
 const PATTERNS = [
-  // Full m3u8 URL with subdomain
-  /m3u8-[^"'\s]+\.c-spanvideo\.org\/event\/event\.(4\d+)\.tsc\.m3u8/,
-  // Any c-spanvideo.org event URL
+  /m3u8-[^"'\s\\]+\.c-spanvideo\.org\/event\/event\.(4\d+)\.tsc\.m3u8/,
+  /m3u8-[^"'\s\\]+\.c-spanvideo\.org\\\/event\\\/event\.(4\d+)\\\.tsc\\\.m3u8/, // JSON-escaped
   /c-spanvideo\.org\/event\/event\.(4\d+)/,
-  // JSON-style "videoId":"412345" or videoId: 412345
+  /c-spanvideo\.org\\\/event\\\/event\.(4\d+)/,                                  // JSON-escaped
   /"videoId"\s*:\s*"?(4\d{4,6})"?/,
-  // Any standalone 4XXXXX integer near "video" context (last resort)
+  /'videoId'\s*:\s*'?(4\d{4,6})'?/,
+  /\beventId['":\s]+(4\d{4,6})/i,
   /\bvideo[^"'\n]{0,80}(4\d{5})\b/i,
 ];
 
@@ -51,11 +51,26 @@ function fetchPage(url, redirectCount = 0) {
   });
 }
 
+function findContext(html, keyword, contextLen = 120) {
+  const results = [];
+  let idx = 0;
+  const lower = html.toLowerCase();
+  const kw = keyword.toLowerCase();
+  while ((idx = lower.indexOf(kw, idx)) !== -1) {
+    const start = Math.max(0, idx - contextLen);
+    const end = Math.min(html.length, idx + kw.length + contextLen);
+    results.push(html.slice(start, end).replace(/\s+/g, " "));
+    idx += kw.length;
+  }
+  return results;
+}
+
 async function main() {
   console.log(`Fetching: ${PAGE_URL}`);
   const html = await fetchPage(PAGE_URL);
   console.log(`Received ${html.length} bytes`);
 
+  // Try all patterns on the full HTML
   let videoId = null;
   for (const re of PATTERNS) {
     const m = html.match(re);
@@ -67,12 +82,23 @@ async function main() {
   }
 
   if (!videoId) {
-    // Print a diagnostic snippet to help diagnose future failures
-    const snippet = html.slice(0, 3000).replace(/\s+/g, " ");
-    console.error("--- First 3000 chars of page (for diagnostics) ---");
-    console.error(snippet);
-    console.error("---------------------------------------------------");
-    throw new Error("Could not find m3u8 video ID in page source");
+    // --- Diagnostics: show every occurrence of key strings ---
+    for (const kw of ["m3u8", "c-spanvideo", "videoId", "eventId", "streamUrl"]) {
+      const hits = findContext(html, kw);
+      if (hits.length) {
+        console.error(`\n=== "${kw}" (${hits.length} hit(s)) ===`);
+        hits.slice(0, 5).forEach((h, i) => console.error(`  [${i + 1}] ...${h}...`));
+      } else {
+        console.error(`\n=== "${kw}": NOT FOUND ===`);
+      }
+    }
+
+    // Show all 6-digit numbers starting with 4 (potential video IDs)
+    const candidates = [...html.matchAll(/\b(4\d{5})\b/g)].map((m) => m[1]);
+    const unique = [...new Set(candidates)];
+    console.error(`\n=== 6-digit numbers starting with 4: ${unique.join(", ") || "none"} ===`);
+
+    throw new Error("Could not find m3u8 video ID in page source — see diagnostics above");
   }
 
   const outPath = path.join(__dirname, "..", "video-id.json");
