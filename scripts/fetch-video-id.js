@@ -7,17 +7,10 @@ const path = require("path");
 
 const PAGE_URL = "https://www.c-span.org/congress/?chamber=house";
 
-// All patterns tried in order — most specific first
-const PATTERNS = [
-  /m3u8-[^"'\s\\]+\.c-spanvideo\.org\/event\/event\.(4\d+)\.tsc\.m3u8/,
-  /m3u8-[^"'\s\\]+\.c-spanvideo\.org\\\/event\\\/event\.(4\d+)\\\.tsc\\\.m3u8/, // JSON-escaped
-  /c-spanvideo\.org\/event\/event\.(4\d+)/,
-  /c-spanvideo\.org\\\/event\\\/event\.(4\d+)/,                                  // JSON-escaped
-  /"videoId"\s*:\s*"?(4\d{4,6})"?/,
-  /'videoId'\s*:\s*'?(4\d{4,6})'?/,
-  /\beventId['":\s]+(4\d{4,6})/i,
-  /\bvideo[^"'\n]{0,80}(4\d{5})\b/i,
-];
+// Matches data-videoid='412345' or data-videoid="412345"
+const VIDEOID_RE = /data-videoid=['"](\d+)['"]/g;
+// Matches data-videofile='https://...m3u8' to get the exact URL
+const VIDEOFILE_RE = /data-videofile=['"]([^'"]+)['"]/;
 
 function fetchPage(url, redirectCount = 0) {
   if (redirectCount > 5) return Promise.reject(new Error("Too many redirects"));
@@ -51,65 +44,45 @@ function fetchPage(url, redirectCount = 0) {
   });
 }
 
-function findContext(html, keyword, contextLen = 120) {
-  const results = [];
-  let idx = 0;
-  const lower = html.toLowerCase();
-  const kw = keyword.toLowerCase();
-  while ((idx = lower.indexOf(kw, idx)) !== -1) {
-    const start = Math.max(0, idx - contextLen);
-    const end = Math.min(html.length, idx + kw.length + contextLen);
-    results.push(html.slice(start, end).replace(/\s+/g, " "));
-    idx += kw.length;
-  }
-  return results;
-}
-
 async function main() {
   console.log(`Fetching: ${PAGE_URL}`);
   const html = await fetchPage(PAGE_URL);
   console.log(`Received ${html.length} bytes`);
 
-  // Try all patterns on the full HTML
-  let videoId = null;
-  for (const re of PATTERNS) {
-    const m = html.match(re);
-    if (m) {
-      videoId = m[1];
-      console.log(`Matched pattern: ${re}`);
-      break;
-    }
+  // Collect all data-videoid values
+  const allIds = [];
+  let m;
+  while ((m = VIDEOID_RE.exec(html)) !== null) {
+    allIds.push(m[1]);
   }
+  console.log(`Found data-videoid values: ${allIds.join(", ") || "none"}`);
+
+  // Prefer IDs starting with 4 (live House floor events), fall back to 6 (programs)
+  const videoId =
+    allIds.find((id) => id.startsWith("4")) ||
+    allIds.find((id) => id.startsWith("6")) ||
+    allIds[0];
 
   if (!videoId) {
-    // --- Diagnostics: show every occurrence of key strings ---
-    for (const kw of ["m3u8", "c-spanvideo", "videoId", "eventId", "streamUrl"]) {
-      const hits = findContext(html, kw);
-      if (hits.length) {
-        console.error(`\n=== "${kw}" (${hits.length} hit(s)) ===`);
-        hits.slice(0, 5).forEach((h, i) => console.error(`  [${i + 1}] ...${h}...`));
-      } else {
-        console.error(`\n=== "${kw}": NOT FOUND ===`);
-      }
-    }
-
-    // Show all 6-digit numbers starting with 4 (potential video IDs)
-    const candidates = [...html.matchAll(/\b(4\d{5})\b/g)].map((m) => m[1]);
-    const unique = [...new Set(candidates)];
-    console.error(`\n=== 6-digit numbers starting with 4: ${unique.join(", ") || "none"} ===`);
-
-    throw new Error("Could not find m3u8 video ID in page source — see diagnostics above");
+    throw new Error("No data-videoid found in page source");
   }
+
+  // Use data-videofile URL if present, otherwise construct from ID
+  const fileMatch = html.match(VIDEOFILE_RE);
+  const m3u8Url = fileMatch
+    ? fileMatch[1]
+    : `https://m3u8-l.c-spanvideo.org/event/event.${videoId}.tsc.m3u8`;
 
   const outPath = path.join(__dirname, "..", "video-id.json");
   const payload = {
     videoId,
-    m3u8Url: `https://m3u8-l.c-spanvideo.org/event/event.${videoId}.tsc.m3u8`,
+    m3u8Url,
     fetchedAt: new Date().toISOString(),
   };
 
   fs.writeFileSync(outPath, JSON.stringify(payload, null, 2) + "\n");
   console.log(`Video ID: ${videoId}`);
+  console.log(`m3u8 URL: ${m3u8Url}`);
   console.log(`Written to ${outPath}`);
 }
 
