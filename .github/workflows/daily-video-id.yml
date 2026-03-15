@@ -1,0 +1,34 @@
+name: Daily C-SPAN Video ID Scraper
+
+on:
+  schedule:
+    # Runs at 12:00 UTC every day (house floor sessions typically start mid-morning ET)
+    - cron: "0 12 * * *"
+  workflow_dispatch: # allows manual trigger from the Actions tab
+
+jobs:
+  fetch-video-id:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Run scraper
+        run: node scripts/fetch-video-id.js
+
+      - name: Commit and push updated video-id.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add video-id.json
+          # Only commit if the file actually changed
+          git diff --cached --quiet || git commit -m "chore: update video-id.json [$(date -u +%Y-%m-%d)]"
+          git push
