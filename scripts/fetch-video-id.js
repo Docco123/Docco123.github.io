@@ -7,17 +7,10 @@ const path = require("path");
 
 const PAGE_URL = "https://www.c-span.org/congress/?chamber=house";
 
-// Try patterns from most specific to most permissive
-const PATTERNS = [
-  // Full m3u8 URL with subdomain
-  /m3u8-[^"'\s]+\.c-spanvideo\.org\/event\/event\.(4\d+)\.tsc\.m3u8/,
-  // Any c-spanvideo.org event URL
-  /c-spanvideo\.org\/event\/event\.(4\d+)/,
-  // JSON-style "videoId":"412345" or videoId: 412345
-  /"videoId"\s*:\s*"?(4\d{4,6})"?/,
-  // Any standalone 4XXXXX integer near "video" context (last resort)
-  /\bvideo[^"'\n]{0,80}(4\d{5})\b/i,
-];
+// Matches data-videoid='412345' or data-videoid="412345"
+const VIDEOID_RE = /data-videoid=['"](\d+)['"]/g;
+// Matches data-videofile='https://...m3u8' to get the exact URL
+const VIDEOFILE_RE = /data-videofile=['"]([^'"]+)['"]/;
 
 function fetchPage(url, redirectCount = 0) {
   if (redirectCount > 5) return Promise.reject(new Error("Too many redirects"));
@@ -56,34 +49,40 @@ async function main() {
   const html = await fetchPage(PAGE_URL);
   console.log(`Received ${html.length} bytes`);
 
-  let videoId = null;
-  for (const re of PATTERNS) {
-    const m = html.match(re);
-    if (m) {
-      videoId = m[1];
-      console.log(`Matched pattern: ${re}`);
-      break;
-    }
+  // Collect all data-videoid values
+  const allIds = [];
+  let m;
+  while ((m = VIDEOID_RE.exec(html)) !== null) {
+    allIds.push(m[1]);
   }
+  console.log(`Found data-videoid values: ${allIds.join(", ") || "none"}`);
+
+  // Prefer IDs starting with 4 (live House floor events), fall back to 6 (programs)
+  const videoId =
+    allIds.find((id) => id.startsWith("4")) ||
+    allIds.find((id) => id.startsWith("6")) ||
+    allIds[0];
 
   if (!videoId) {
-    // Print a diagnostic snippet to help diagnose future failures
-    const snippet = html.slice(0, 3000).replace(/\s+/g, " ");
-    console.error("--- First 3000 chars of page (for diagnostics) ---");
-    console.error(snippet);
-    console.error("---------------------------------------------------");
-    throw new Error("Could not find m3u8 video ID in page source");
+    throw new Error("No data-videoid found in page source");
   }
+
+  // Use data-videofile URL if present, otherwise construct from ID
+  const fileMatch = html.match(VIDEOFILE_RE);
+  const m3u8Url = fileMatch
+    ? fileMatch[1]
+    : `https://m3u8-l.c-spanvideo.org/event/event.${videoId}.tsc.m3u8`;
 
   const outPath = path.join(__dirname, "..", "video-id.json");
   const payload = {
     videoId,
-    m3u8Url: `https://m3u8-l.c-spanvideo.org/event/event.${videoId}.tsc.m3u8`,
+    m3u8Url,
     fetchedAt: new Date().toISOString(),
   };
 
   fs.writeFileSync(outPath, JSON.stringify(payload, null, 2) + "\n");
   console.log(`Video ID: ${videoId}`);
+  console.log(`m3u8 URL: ${m3u8Url}`);
   console.log(`Written to ${outPath}`);
 }
 
