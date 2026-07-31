@@ -34,3 +34,113 @@ input.invalid, textarea.invalid {
 input.valid, textarea.valid {
     border: 2px solid green;
 }
+
+/* ===== Release roadmap timeline (hero) ===== */
+.mio-roadmap {
+    max-width: 620px;
+    margin: 0 auto 20px;
+    padding: 0 10px 56px;
+}
+.mio-roadmap__track {
+    position: relative;
+    height: 4px;
+    margin: 46px 8px 0;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+}
+.mio-roadmap__fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 25%;
+    background: #ffffff;
+    border-radius: 4px;
+}
+.mio-roadmap__step {
+    position: absolute;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    margin: -7px 0 0 -7px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 0 3px rgba(20, 17, 44, 0.6);
+}
+.mio-roadmap__step.is-done {
+    background: #ffffff;
+}
+.mio-roadmap__label {
+    position: absolute;
+    top: 22px;
+    transform: translateX(-50%);
+    width: 120px;
+    text-align: center;
+    color: #ffffff;
+    letter-spacing: 1px;
+    line-height: 1.3;
+}
+.mio-roadmap__label .mio-roadmap__stage {
+    display: block;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 500;
+}
+.mio-roadmap__label .mio-roadmap__date {
+    display: block;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+}
+/* "You are here" marker between Alpha and Beta */
+.mio-roadmap__marker {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.35);
+    animation: mio-pulse 1.8s ease-out infinite;
+}
+@keyframes mio-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.45); }
+    70%  { box-shadow: 0 0 0 12px rgba(255, 255, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
+/* ===== HPO / Advocate audience toggle (What we do) ===== */
+.mio-audience-toggle {
+    display: inline-flex;
+    gap: 8px;
+    padding: 8px;
+    background: #eef0f8;
+    border: 2px solid #3949a0;
+    border-radius: 999px;
+}
+.mio-audience-toggle__btn {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #3949a0;
+    padding: 18px 60px;
+    border-radius: 999px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.mio-audience-toggle__btn:hover { color: #28306e; }
+.mio-audience-toggle__btn.is-active { background: #3949a0; color: #fff; }
+.mio-audience-toggle__btn.is-active:hover { color: #fff; }
+@media (max-width: 576px) {
+    .mio-audience-toggle__btn { font-size: 18px; padding: 14px 30px; }
+}
+/* Advocate view: swap each card's content (HPO <-> Advocate) */
+.mio-content--advocate { display: none; }
+#services.mio-view-advocate .mio-content--hpo { display: none; }
+#services.mio-view-advocate .mio-content--advocate { display: block; }
