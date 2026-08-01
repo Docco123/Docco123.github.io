@@ -163,6 +163,16 @@ input.valid, textarea.valid {
 .mio-audience-toggle--header .mio-audience-toggle__btn:hover { color: #cfd6ff; }
 .mio-audience-toggle--header .mio-audience-toggle__btn.is-active { background: #3949a0; color: #fff; }
 .mio-audience-toggle--header .mio-audience-toggle__btn.is-active:hover { color: #fff; }
+/* Gentle pulse on the currently selected pill — clean expanding ring, like the timeline marker */
+@keyframes mio-toggle-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5); }
+    70%  { box-shadow: 0 0 0 8px rgba(255, 255, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+.mio-audience-toggle__btn.is-active { animation: mio-toggle-pulse 2s ease-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+    .mio-audience-toggle__btn.is-active { animation: none; }
+}
 @media (min-width: 992px) {
     /* stop the nav collapse from absorbing the free space so the toggle can center */
     #navBar { flex-grow: 0; }
@@ -172,10 +182,10 @@ input.valid, textarea.valid {
         position: static;
         transform: none;
         margin: 0 auto;        /* evenly spaced between the logo and the nav (Home) */
-        padding: 6px;          /* ~40% larger */
-        gap: 6px;
+        padding: 4px;
+        gap: 4px;
     }
-    .mio-audience-toggle--header .mio-audience-toggle__btn { font-size: 17px; padding: 11px 28px; letter-spacing: 0.1em; }
+    .mio-audience-toggle--header .mio-audience-toggle__btn { font-size: 12px; padding: 8px 20px; letter-spacing: 0.1em; }
 }
 
 /* Advocate view: swap each "What we do" card's content (HPO <-> Advocate), driven globally */
