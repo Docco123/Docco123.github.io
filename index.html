@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="site-assets/css/styles.op-business.css">
 
     <!-- CSS Customization -->
-    <link rel="stylesheet" href="site-assets/css/custom.css">
+    <link rel="stylesheet" href="site-assets/css/custom.css?v=5">
 
     <script type="text/javascript">
         var onloadCallback = function () {
@@ -64,6 +64,11 @@
                             <img class="u-header__logo-img u-header__logo-img--main" height="50" src="site-assets/img/logo-white.svg" alt="Made in Order Logo">
                         </a>
                         <!-- End Logo -->
+                        <!-- Audience toggle: right of the logo on desktop, left of the hamburger on mobile -->
+                        <div class="mio-audience-toggle mio-audience-toggle--header" role="tablist" aria-label="Choose audience view">
+                            <button type="button" class="mio-audience-toggle__btn is-active" data-view="hpo" role="tab" aria-selected="true">HPO</button>
+                            <button type="button" class="mio-audience-toggle__btn" data-view="advocate" role="tab" aria-selected="false">Advocate</button>
+                        </div>
                         <!-- Navigation -->
                         <div class="collapse navbar-collapse align-items-center flex-sm-row" id="navBar" data-mobile-scroll-hide="true">
                             <ul id="js-scroll-nav" class="navbar-nav text-uppercase g-letter-spacing-2 g-font-size-11 g-pt-20 g-pt-0--lg ml-auto">
@@ -76,11 +81,14 @@
                                 <li class="nav-item g-mx-10--lg g-mx-15--xl g-mb-7 g-mb-0--lg">
                                     <a href="#services" class="nav-link g-color-white p-0">Services</a>
                                 </li>
-                                <li class="nav-item g-mx-10--lg g-mx-15--xl g-mb-7 g-mb-0--lg">
+                                <!-- <li class="nav-item g-mx-10--lg g-mx-15--xl g-mb-7 g-mb-0--lg">
                                     <a href="#process" class="nav-link g-color-white p-0">Process</a>
+                                </li> -->
+                                <li class="nav-item g-mx-10--lg g-mx-15--xl g-mb-7 g-mb-0--lg">
+                                    <a href="#contact" class="nav-link g-color-white p-0">Get Started</a>
                                 </li>
                                 <li class="nav-item g-ml-10--lg g-ml-15--xl">
-                                    <a href="#contact" class="nav-link g-color-white p-0">Contact</a>
+                                    <a href="#modal1" data-modal-target="#modal1" data-modal-effect="fadein" class="nav-link g-color-white p-0">Contact</a>
                                 </li>
                             </ul>
                         </div>
@@ -128,12 +136,16 @@
                     </div>
                     <div class="info-v3-4 g-theme-bg-blue-dark-v1-opacity-0_9 g-pa-40 g-pa-60--md">
                         <div class="g-pos-rel g-z-index-3">
-                            <h3 class="h3 g-letter-spacing-2 g-font-weight-300 g-color-white g-font-size-20 g-mb-20">House Personal Office (HPO)</h3>
-                            <p class="g-line-height-1_8 g-letter-spacing-3 g-color-white g-mb-20">
+                            <h3 class="h3 g-letter-spacing-2 g-font-weight-300 g-color-white g-font-size-20 g-mb-20 mio-only-hpo">House Personal Office (MIO HPO)</h3>
+                            <h3 class="h3 g-letter-spacing-2 g-font-weight-300 g-color-white g-font-size-20 g-mb-20 mio-only-advocate">Advocate (MIO Advocate)</h3>
+                            <p class="g-line-height-1_8 g-letter-spacing-3 g-color-white g-mb-20 mio-only-hpo">
                                 Software designed specifically for Hill staff to save time, help keep
-                                <br> your office organized, and bring the Hill into the 21st century. 
+                                <br> your office organized, and bring the Hill into the 21st century.
                             </p>
-                            <div class="mio-roadmap">
+                            <p class="g-line-height-1_8 g-letter-spacing-3 g-color-white g-mb-20 mio-only-advocate">
+                                Be where Hill decisions happen. Save time, manage contacts, meetings, and relationships, and engage Hill staff directly on the platform they use to collaborate and make critical decisions, so you can make your case at the point of decision, not wait in an inbox.
+                            </p>
+                            <div class="mio-roadmap mio-only-hpo">
                                 <div class="mio-roadmap__track">
                                     <span class="mio-roadmap__marker"></span>
                                     <span class="mio-roadmap__fill"></span>
@@ -154,6 +166,7 @@
                                     </span>
                                 </div>
                             </div>
+                            <p class="g-line-height-1_8 g-letter-spacing-5 text-uppercase g-color-white g-font-size-20 g-mb-20 mio-only-advocate">Coming in 2027</p>
                             <a id="btnlearn" href="#services" class="btn text-uppercase u-btn-outline-white rounded-0 g-mt-20">Learn More</a>
                         </div>
                     </div>
@@ -190,7 +203,7 @@
                          data-slides-show="true"
                          data-pagi-classes="u-carousel-indicators-v1 g-absolute-centered--x g-bottom-30">
 
-						<div class="js-slide">
+						<div class="js-slide mio-slide-hpo">
                             <img class="img-fluid w-100" src="site-assets/img-temp/450x300/Voting.png" alt="Image description">
 
                             <div class="g-pa-30">
@@ -210,7 +223,7 @@
 
 
 
-                        <div class="js-slide">
+                        <div class="js-slide mio-slide-hpo">
                             <img class="img-fluid w-100" src="site-assets/img-temp/450x300/img1.jpg" alt="Image description">
 
                             <div class="g-pa-30">
@@ -225,7 +238,7 @@
                         </div>
 						
 
-                        <div class="js-slide">
+                        <div class="js-slide mio-slide-hpo">
                             <img class="img-fluid w-100" src="site-assets/img-temp/450x300/img2.jpg" alt="Image description">
 
                             <div class="g-pa-30">
@@ -247,7 +260,7 @@
                             </div>
                         </div>
 
-                        <div class="js-slide">
+                        <div class="js-slide mio-slide-hpo">
                             <img class="img-fluid w-100" src="site-assets/img-temp/450x300/img3.jpg" alt="Image description">
 
                             <div class="g-pa-30">
@@ -262,7 +275,7 @@
                             </div>
                         </div>
 
-                        <div class="js-slide">
+                        <div class="js-slide mio-slide-hpo">
                             <img class="img-fluid w-100" src="site-assets/img-temp/450x300/keep-in-sync.jpg" alt="Team coordinating and staying in sync">
 
                             <div class="g-pa-30">
@@ -273,7 +286,7 @@
                             </div>
                         </div>
 
-                        <div class="js-slide">
+                        <div class="js-slide mio-slide-advocate">
                             <img class="img-fluid w-100" src="site-assets/img-temp/450x300/img1.jpg" alt="Image description">
 
                             <div class="g-pa-30">
@@ -285,6 +298,46 @@
                                 <p class="g-color-gray-light-v2 g-mb-10"><b>Submit requests quickly and consistently.</b> Send appropriations requests, meeting requests, and other submissions directly to participating offices without searching for separate forms or repeating the same administrative work.</p>
 
                                 <p class="g-color-gray-light-v2 g-mb-10">By connecting your advocacy efforts directly with congressional workflows, MIO Advocate saves time, strengthens relationships, and helps turn your work into measurable wins.</p>
+                            </div>
+                        </div>
+
+                        <div class="js-slide mio-slide-advocate">
+                            <img class="img-fluid w-100" src="site-assets/img-temp/450x300/img1.jpg" alt="Image description">
+
+                            <div class="g-pa-30">
+                                <h3 class="text-uppercase g-font-weight-700 g-font-size-20 g-color-white g-mb-10">Know Your History with Every Hill Office</h3>
+                                <p class="g-color-gray-light-v2 g-mb-10"><i>You have an important meeting tomorrow. In seconds, see who on your team knows the office, which staffers they have worked with, what was discussed, and every way your organization has engaged with the member on and off the Hill. Walk in with the full history, even as staff change.</i></p>
+                                <p class="g-color-gray-light-v2 g-mb-10">Keep contacts, meetings, event conversations, requests, and follow-ups in one shared record, so colleagues can coordinate outreach and avoid overwhelming an office with overlapping asks. Share interactions with your team when useful or keep them private when needed, while giving everyone the context to build stronger relationships and advocate more effectively.</p>
+                            </div>
+                        </div>
+
+                        <div class="js-slide mio-slide-advocate">
+                            <img class="img-fluid w-100" src="site-assets/img-temp/450x300/img2.jpg" alt="Image description">
+
+                            <div class="g-pa-30">
+                                <h3 class="text-uppercase g-font-weight-700 g-font-size-20 g-color-white g-mb-10">Automatically Build a Searchable Record of Your Advocacy</h3>
+                                <p class="g-color-gray-light-v2 g-mb-10"><i>You bring a new associate onto a client team. Instead of spending days piecing together the history, they can instantly see every meeting, Hill interaction, letter, bill, request, and result.</i></p>
+                                <p class="g-color-gray-light-v2 g-mb-10">MIO Advocate preserves your team’s institutional knowledge. Search by client, issue, member, office, or date to see what your team has done, who was involved, what worked, and what did not. As team members change, the history stays with your organization, so new colleagues can get up to speed quickly.</p>
+                            </div>
+                        </div>
+
+                        <div class="js-slide mio-slide-advocate">
+                            <img class="img-fluid w-100" src="site-assets/img-temp/450x300/img3.jpg" alt="Image description">
+
+                            <div class="g-pa-30">
+                                <h3 class="text-uppercase g-font-weight-700 g-font-size-20 g-color-white g-mb-10">Collaborate Seamlessly</h3>
+                                <p class="g-color-gray-light-v2 g-mb-10"><i>Complex advocacy efforts shouldn’t be managed through endless email chains, scattered spreadsheets, and outdated attachments. MIO Advocate gives your team, partner organizations, and Hill offices a shared, purpose-built workspace to collaborate on letters, bills, coalitions, events, and other coordinated projects, directly on the platform Hill staff use to manage the work.</i></p>
+                                <p class="g-color-gray-light-v2 g-mb-10">Coordinate who is engaging each office, see who has met with whom, and share meeting results in real time. Give Hill offices a clear view of who is participating and where the effort stands. Whether multiple colleagues are working across clients and constituencies or several advocacy organizations are advancing the same project, everyone can stay aligned on responsibilities, relationships, and results.</p>
+                            </div>
+                        </div>
+
+                        <div class="js-slide mio-slide-advocate">
+                            <img class="img-fluid w-100" src="site-assets/img-temp/450x300/keep-in-sync.jpg" alt="Team coordinating and staying in sync">
+
+                            <div class="g-pa-30">
+                                <h3 class="text-uppercase g-font-weight-700 g-font-size-20 g-color-white g-mb-10">Keep Your Team in Sync</h3>
+                                <p class="g-color-gray-light-v2 g-mb-10"><b>Coordinate schedules across your organization.</b> Create as many shared calendars as you need for client work, Hill meetings, events, fundraisers, deadlines, remote-work schedules, and other shared activities. Everyone can instantly see what is happening, who is attending, and who is in or out of the office.</p>
+                                <p class="g-color-gray-light-v2 g-mb-10"><b>Manage leave and availability in one place.</b> Staff can request time off, supervisors can review and approve it, and approved leave is automatically reflected on the appropriate shared calendar. Sync calendars across devices so your team can access the latest schedule from anywhere.</p>
                             </div>
                         </div>
                     </div>
@@ -300,14 +353,6 @@
                     <h2 class="h1 u-heading-v2__title g-line-height-1_3 g-font-weight-600 g-font-size-40 g-mb-minus-10">What we do</h2>
                 </div>
 
-                <!-- Audience toggle: HPO / Advocate -->
-                <div class="text-center g-mb-50">
-                    <div class="mio-audience-toggle" role="tablist" aria-label="Choose audience view">
-                        <button type="button" class="mio-audience-toggle__btn is-active" data-view="hpo" role="tab" aria-selected="true">HPO</button>
-                        <button type="button" class="mio-audience-toggle__btn" data-view="advocate" role="tab" aria-selected="false">Advocate</button>
-                    </div>
-                </div>
-
                 <!-- Icon Blocks -->
                 <div class="row no-gutters">
 				
@@ -319,7 +364,7 @@
                                 <i class="icon-social-youtube"></i>
                             </span>
                             <h3 class="h5 text-uppercase g-color-black g-mb-10">Communication</h3>
-                            <p class="g-color-gray-dark-v4"> MIO lets you share real time voting recommendations with your boss and provides a platform to collaborate instantly with other offices and stakeholders—saving time, preventing mistakes, and cutting down on endless email chains.</p>
+                            <p class="g-color-gray-dark-v4">Share real-time vote recommendations and collaborate with offices and stakeholders, saving time, reducing errors, and cutting email chains.</p>
 
                             <div class="d-inline-block g-width-40 g-brd-bottom g-brd-2 g-brd-primary g-my-15"></div>
 
@@ -327,7 +372,7 @@
                                 <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10">Real Time Voting Recs to the Boss</li>
                                 <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10">Avoid Tons of Emails</li>
                                 <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10">Real Time Updates</li>
-                                <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10">Collaborate on Bills, Projects, Letters etc. with Other Offices</li>
+                                <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10">Collaborate on Bills, Projects, Letters etc.</li>
                                 <li class="g-py-8">Promote Your Office’s Work</li>
                             </ul>
                         </div>
@@ -336,14 +381,14 @@
                                 <i class="icon-speech"></i>
                             </span>
                             <h3 class="h5 text-uppercase g-color-black g-mb-10">Congressional Engagement</h3>
-                            <p class="g-color-gray-dark-v4">Connect with congressional staff through the platform they use to schedule meetings, review requests, and manage the work of Congress—putting your advocacy directly into the workflows where decisions are made.</p>
+                            <p class="g-color-gray-dark-v4">Connect with congressional staff on the platform they use to manage meetings, requests, and decisions, putting your advocacy directly into their workflow.</p>
 
                             <div class="d-inline-block g-width-40 g-brd-bottom g-brd-2 g-brd-primary g-my-15"></div>
 
                             <ul class="list-unstyled text-uppercase g-mb-0">
                                 <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10">Submit meeting requests and coordinate schedules</li>
                                 <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10">Send appropriations requests</li>
-                                <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10">Submit legislative requests directly into congressional workflow</li>
+                                <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10">Submit requests directly into congressional workflow</li>
                                 <li class="g-py-8">Move important communications out of crowded inboxes</li>
                             </ul>
                         </div>
@@ -470,8 +515,9 @@
             </div>
         </section>
         <!-- End Section Content -->
-        <!-- Section Content -->
-        <section id="process" class="g-theme-bg-blue-dark-v1 g-py-80">
+
+        <!-- ===== Process section — hidden for now (uncomment to restore) =====
+<section id="process" class="g-theme-bg-blue-dark-v1 g-py-80">
             <div class="container text-center g-width-780 g-color-gray-light-v2 g-mb-60">
                 <div class="text-uppercase u-heading-v2-4--bottom g-brd-primary g-mb-40">
                     <h4 class="h6 g-font-weight-800 g-font-size-12 g-letter-spacing-2 g-color-primary g-mb-20">Process</h4>
@@ -486,7 +532,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 g-px-30 g-mb-40">
-                        <!-- Icon Blocks -->
+                        
                         <div class="g-pos-rel g-parent g-theme-bg-blue-dark-v2 g-py-35 g-px-25 g-pl-70--sm">
                             <div class="g-hidden-xs-down g-absolute-centered--y g-left-0">
                                 <div class="g-pull-50x-left g-brd-around g-brd-5 g-brd-primary-dark-v3 g-rounded-50x g-overflow-hidden">
@@ -502,11 +548,11 @@
                                 We know that after a free 1 month test drive you will understand how essential MIO will become to your everyday work.
                             </p>
                         </div>
-                        <!-- End Icon Blocks -->
+                        
                     </div>
 
                     <div class="col-lg-6 g-px-30 g-mb-40">
-                        <!-- Icon Blocks -->
+                        
                         <div class="g-pos-rel g-parent g-theme-bg-blue-dark-v2 g-py-35 g-px-25 g-pl-70--sm">
                             <div class="g-hidden-xs-down g-absolute-centered--y g-left-0">
                                 <div class="g-pull-50x-left g-brd-around g-brd-5 g-brd-primary-dark-v3 g-rounded-50x g-overflow-hidden">
@@ -522,64 +568,49 @@
                                 MIO will quickly become your go-to app for fast decision-making support.
                             </p>
                         </div>
-                        <!-- End Icon Blocks -->
+                        
                     </div>
                 </div>
-                <!-- End Icon Blocks -->
-                <!-- Icon Blocks -->
-				
-				
-                <!-- <div class="row g-mb-50"> -->
-                    <!-- <div class="col-lg-6 g-px-30 g-mb-40"> -->
-                        <!-- <div class="g-pos-rel g-parent g-theme-bg-blue-dark-v2 g-py-35 g-px-25 g-pl-70--sm"> -->
-                            <!-- <div class="g-hidden-xs-down g-absolute-centered--y g-left-0"> -->
-                                <!-- <div class="g-pull-50x-left g-brd-around g-brd-5 g-brd-primary-dark-v3 g-rounded-50x g-overflow-hidden"> -->
-                                    <!-- <span class="d-block g-pos-abs g-top-0 g-left-0 g-width-95 g-height-95 g-brd-around g-brd-5 g-brd-primary g-rounded-50x" style="background-image: url(site-assets/img-temp/80x80/img3.jpg);"></span> -->
-                                    <!-- <span class="u-icon-v3 u-icon-size--xl g-width-95 g-height-95 g-color-white g-bg-primary g-opacity-1 opacity-0--parent-hover g-transition-0_1 g-transition--ease-in"> -->
-                                        <!-- <i class="icon-rocket"></i> -->
-                                    <!-- </span> -->
-                                <!-- </div> -->
-                            <!-- </div> -->
 
-                            <!-- <h3 class="h5 text-uppercase g-font-size-16 g-color-gray-light-v2 g-mb-10">Step 3. Get Going with MIO!</h3> -->
-                            <!-- <p class="g-color-gray-light-v2 mb-0">Start saving time while automatically building your searchable record.</p> -->
-                        <!-- </div> -->
-                    <!-- </div> -->
-
-                    <!-- <div class="col-lg-6 g-px-30 g-mb-40"> -->
-                        <!-- <div class="g-pos-rel g-parent g-theme-bg-blue-dark-v2 g-py-35 g-px-25 g-pl-70--sm"> -->
-                            <!-- <div class="g-hidden-xs-down g-absolute-centered--y g-left-0"> -->
-                                <!-- <div class="g-pull-50x-left g-brd-around g-brd-5 g-brd-primary-dark-v3 g-rounded-50x g-overflow-hidden"> -->
-                                    <!-- <span class="d-block g-pos-abs g-top-0 g-left-0 g-width-95 g-height-95 g-brd-around g-brd-5 g-brd-primary g-rounded-50x" style="background-image: url(site-assets/img-temp/80x80/img4.jpg);"></span> -->
-                                    <!-- <span class="u-icon-v3 u-icon-size--xl g-width-95 g-height-95 g-color-white g-bg-primary g-opacity-1 opacity-0--parent-hover g-transition-0_1 g-transition--ease-in"> -->
-                                        <!-- <i class="icon-layers"></i> -->
-                                    <!-- </span> -->
-                                <!-- </div> -->
-                            <!-- </div> -->
-
-                            <!-- <h3 class="h5 text-uppercase g-font-size-16 g-color-gray-light-v2 g-mb-10">Step 4. Grow with MIO</h3> -->
-                            <!-- <p class="g-color-gray-light-v2 mb-0"> -->
-                                <!-- Your benefits grow as your MIO data grows, and MIO will continue to innovate and solve your problems as your needs evolve. -->
-                            <!-- </p> -->
-                        <!-- </div> -->
-                    <!-- </div> -->
-                <!-- </div> -->
 				
+
+                    
+
+                                
+
+                                        
+
+                            
+
+                            
+
+                    
+
+                                
+
+                                        
+
+                            
+
+                            
+
+                        
+
 				
-                <!-- End Icon Blocks -->
+
             </div>
         </section>
-        <!-- End Section Content -->
+        ===== end Process section ===== -->
 
         <footer>
-            <div id="contact" class="text-center g-bg-white g-py-80">
+            <div id="contact" class="text-center g-color-gray-light-v2 g-theme-bg-blue-dark-v1 g-py-80">
                 <div class="container g-width-780 g-mb-60">
                     <div class="text-uppercase u-heading-v2-4--bottom g-brd-primary g-mb-45">
                         <h4 class="h6 g-font-weight-800 g-font-size-12 g-letter-spacing-2 g-color-primary g-mb-20">Get Started</h4>
-                        <h2 class="h1 u-heading-v2__title g-line-height-1_3 g-font-weight-600 g-font-size-40 g-color-gray-dark-v1 g-mb-minus-10">Get Started with MIO</h2>
+                        <h2 class="h1 u-heading-v2__title g-line-height-1_3 g-font-weight-600 g-font-size-40 g-color-gray-light-v2 g-mb-minus-10">Get Started with MIO</h2>
                     </div>
 
-                    <p class="g-color-gray-dark-v4 mb-0">Interested in joining the beta, scheduling a demonstration, or exploring MIO for your congressional office? We’d be glad to learn more about your needs and help determine the right next step.</p>
+                    <p class="g-color-gray-light-v2 mb-0">Interested in joining the beta, scheduling a demonstration, or exploring MIO for your congressional office? We’d be glad to learn more about your needs and help determine the right next step.</p>
                 </div>
 
                 <div class="container">
@@ -683,19 +714,32 @@
 
             $.HSCore.components.HSModalWindow.init('[data-modal-target]');
 
-            // HPO / Advocate audience toggle in the "What we do" section
-            var audienceBtns = document.querySelectorAll('.mio-audience-toggle__btn');
-            audienceBtns.forEach(function (btn) {
-                btn.addEventListener('click', function () {
-                    var view = btn.getAttribute('data-view');
-                    audienceBtns.forEach(function (b) {
-                        var on = (b === btn);
-                        b.classList.toggle('is-active', on);
-                        b.setAttribute('aria-selected', on ? 'true' : 'false');
-                    });
-                    document.getElementById('services').classList.toggle('mio-view-advocate', view === 'advocate');
+            // ===== Global HPO / Advocate audience switch =====
+            var $aboutCarousel = $('.g-theme-bg-blue-dark-v2 .js-carousel');
+            var audienceFiltered = false;
+            function filterAudienceCarousel(view) {
+                if (!$aboutCarousel.hasClass('slick-initialized')) return;
+                if (audienceFiltered) { $aboutCarousel.slick('slickUnfilter'); }
+                var cls = view === 'advocate' ? 'mio-slide-advocate' : 'mio-slide-hpo';
+                $aboutCarousel.slick('slickFilter', function (i, el) {
+                    // slick wraps each slide, so match the class on the element OR a descendant
+                    return $(el).is('.' + cls) || $(el).find('.' + cls).length > 0;
                 });
+                audienceFiltered = true;
+            }
+            function setAudience(view) {
+                document.body.classList.toggle('mio-view-advocate', view === 'advocate');
+                document.querySelectorAll('.mio-audience-toggle__btn').forEach(function (b) {
+                    var on = b.getAttribute('data-view') === view;
+                    b.classList.toggle('is-active', on);
+                    b.setAttribute('aria-selected', on ? 'true' : 'false');
+                });
+                filterAudienceCarousel(view);
+            }
+            document.querySelectorAll('.mio-audience-toggle__btn').forEach(function (btn) {
+                btn.addEventListener('click', function () { setAudience(btn.getAttribute('data-view')); });
             });
+            setAudience('hpo'); // initial state, now that the carousel is initialized
         });
 
         function submitToAPI(e) {
