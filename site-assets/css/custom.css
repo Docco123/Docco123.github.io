@@ -137,6 +137,9 @@ input.valid, textarea.valid {
 .mio-audience-toggle__btn:hover { color: #28306e; }
 .mio-audience-toggle__btn.is-active { background: #3949a0; color: #fff; }
 .mio-audience-toggle__btn.is-active:hover { color: #fff; }
+/* no lingering focus ring after a mouse click; keep a clean one for keyboard users */
+.mio-audience-toggle__btn:focus { outline: none; }
+.mio-audience-toggle__btn:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.85); outline-offset: 2px; }
 @media (max-width: 576px) {
     .mio-audience-toggle__btn { font-size: 18px; padding: 14px 30px; }
 }
